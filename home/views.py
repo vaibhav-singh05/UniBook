@@ -1,6 +1,7 @@
 from django.shortcuts import render, HttpResponse, redirect
 from datetime import datetime
 from home.models import Contact
+from home.models import Product
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login, get_user_model
@@ -74,6 +75,23 @@ def register(request):
     return render(request, 'register.html')
 
 def sell(request):
-    if request.user.is_anonymous:
-        return redirect('/login')
-    return render(request, 'sell.html')
+        if request.user.is_anonymous:
+            return redirect('/login')
+        
+        if request.method == 'POST':
+             product_category = request.POST.get('product_category')
+             title = request.POST.get('title')
+             desc = request.POST.get('desc')
+             price = request.POST.get('price')
+             image1 = request.FILES.get('image1')
+             image2 = request.FILES.get('image2')
+             image3 = request.FILES.get('image3')
+             mobile = request.POST.get('mobile')
+             location = request.POST.get('location')
+             sell = Product(product_category=product_category, title=title, desc=desc, price=price, image1=image1,image2=image2, image3=image3, mobile=mobile, location=location, date=datetime.now())
+             sell.save()
+             messages.success(request, "Succesfully Posted!")
+        return render(request, 'sell.html')
+
+
+
