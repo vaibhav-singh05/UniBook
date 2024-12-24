@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Post Your Ad
+{% endblock %}
+
+{% block body %}
+  <body class="bg-light">
+    <div class="container my-5">
+      <div class="mx-auto" style="max-width: 800px;">
+        <div class="p-4 bg-white rounded shadow">
+          <h1 class="text-center mb-4">Post Your Ad</h1>
+          <form method="post" action="/sell">
+            {% csrf_token %}
+            <!-- Book Category Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Book Category</h2>
+              <select class="form-select" name="category" required>
+                <option value="">Select a category</option>
+                <option value="fiction">Computer Science</option>
+                <option value="non-fiction">Cloud Computing</option>
+                <option value="textbook">Business Communication</option>
+                <option value="comics">C++/Java Programming</option>
+                <option value="other">Python Programming</option>
+                <option value="">Applied Chemistry</option>
+                <option value="fiction">Management and Humanities</option>
+                <option value="non-fiction">Quantum Mechanics</option>
+                <option value="textbook">Engineering Mathematics</option>
+                <option value="comics">Software Engineering</option>
+                <option value="other">Cybersecurity</option>
+              </select>
+            </div>
+
+            <!-- Include Some Details Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Include Some Details</h2>
+              <div class="mb-3">
+                <label for="ad-title" class="form-label">Ad Title *</label>
+                <input type="text" class="form-control" id="ad-title" name="ad-title" maxlength="70" placeholder="Mention the key features of your item (e.g. brand, model, age, type)" required />
+                <small class="form-text text-muted" id="title-counter">0 / 70</small>
+              </div>
+              <div>
+                <label for="description" class="form-label">Description *</label>
+                <textarea class="form-control" id="description" name="description" minlength="10" maxlength="4096" rows="4" placeholder="A minimum length of 10 characters is required." required></textarea>
+                <small class="form-text text-muted" id="desc-counter">0 / 4096</small>
+              </div>
+            </div>
+
+            <!-- Set a Price Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Set a Price</h2>
+              <label for="price" class="form-label">Price *</label>
+              <input type="number" class="form-control" id="price" name="price" placeholder="Enter the price (e.g. 500)" required />
+            </div>
+
+            <!-- Upload Photos Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Upload up to 3 Photos</h2>
+              <div class="d-flex flex-wrap gap-2">
+                <input type="file" class="form-control" id="photo1" name="photo1" accept="image/*" />
+                <input type="file" class="form-control" id="photo2" name="photo2" accept="image/*" />
+                <input type="file" class="form-control" id="photo3" name="photo3" accept="image/*" />
+              </div>
+            </div>
+
+            <!-- Confirm Location Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Confirm Your Location</h2>
+              <input type="text" class="form-control" name="location" placeholder="Enter your city or location" required />
+            </div>
+
+            <!-- Review Your Details Section -->
+            <div class="mb-4">
+              <h2 class="h5 mb-3">Review Your Details</h2>
+              <textarea class="form-control" name="notes" rows="3" placeholder="Any additional information or notes (optional)"></textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary btn-lg">Post</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+{% endblock %}

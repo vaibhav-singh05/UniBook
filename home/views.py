@@ -72,3 +72,8 @@ def register(request):
         messages.success(request, "Your have registered successfully")
 
     return render(request, 'register.html')
+
+def sell(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
+    return render(request, 'sell.html')
