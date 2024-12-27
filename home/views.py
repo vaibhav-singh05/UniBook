@@ -13,9 +13,7 @@ def index(request):
     if request.user.is_anonymous:
         return redirect('/login')
     products = Product.objects.all()
-    n = len(products)
-    nSlides = n//3 + ceil((n/3)-(n//3))
-    params = {'no_of_sildes': nSlides, 'range': range(1,nSlides), 'product': products}
+    params = {'product': products}
     return render(request, 'index.html', params)
 
 
