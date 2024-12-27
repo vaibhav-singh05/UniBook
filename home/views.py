@@ -5,12 +5,18 @@ from home.models import Product
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import logout, authenticate, login, get_user_model
+from.models import Product
+from math import ceil
 
 # Create your views here.
 def index(request):
     if request.user.is_anonymous:
         return redirect('/login')
-    return render(request, 'index.html')
+    products = Product.objects.all()
+    n = len(products)
+    nSlides = n//3 + ceil((n/3)-(n//3))
+    params = {'no_of_sildes': nSlides, 'range': range(1,nSlides), 'product': products}
+    return render(request, 'index.html', params)
 
 
 def about(request):

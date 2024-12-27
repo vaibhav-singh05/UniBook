@@ -58,141 +58,21 @@
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        <a class="text-decoration-none " href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album1.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
+        {% for i in product %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="bd-placeholder-img card-img-top" width="100%" height="225" src=/media/{{i.image1}} alt="" />
+            <div class="card-body">
+              <p class="card-text fs-3 fw-semibold mb-0">&#8377; {{ i.price }}</p>
+              <p class="card-text fw-semibold mb-0">{{ i.title }}</p>
+              <p class="card-text fst-italic mb-0">{{ i.product_category }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <small class="text-body-secondary">Today</small>
               </div>
             </div>
           </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album2.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album3.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album4.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album5.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album6.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album7.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album8.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a class="text-decoration-none" href="/details">
-          <div class="col">
-            <div class="card shadow-sm">
-              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="/static/img/album9.jpg" alt="" />
-              <div class="card-body">
-                <p class="card-text fs-3 fw-semibold mb-0">&#8377; 500</p>
-                <p class="card-text fw-semibold mb-0">Book Name</p>
-                <p class="card-text fst-italic mb-0">Writer Name</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <small class="text-body-secondary">Today</small>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
+        </div>
+        {% endfor %}
       </div>
     </div>
   </div>
