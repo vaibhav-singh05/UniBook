@@ -1,10 +1,12 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+  My Profile
+{% endblock %}
+
+{% block body %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ user.username }}'s Profile</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +24,7 @@
             display: flex;
             flex-direction: column;
             max-width: 1200px;
-            margin: 95px auto 60px auto;
+            margin: 65px auto 60px auto;
             background: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -51,7 +53,7 @@
             margin-top: 20px;
         }
 
-        button, .btn {
+        button, .btns {
             background-color: #007bff;
             color: #fff;
             border: none;
@@ -63,7 +65,7 @@
             text-decoration: none;
         }
 
-        button:hover, .btn:hover {
+        button:hover, .btns:hover {
             background-color: #0056b3;
         }
 
@@ -103,14 +105,16 @@
             margin-right: 10px;
         }
 
+        .space{
+            padding: 5px 0px;
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
             }
         }
     </style>
-</head>
-<body>
     <div class="container">
         <!-- Profile Section -->
         <div class="profile-section">
@@ -121,7 +125,7 @@
             {% endif %}
             <h1>{{ user.username }}</h1>
             <div class="profile-actions">
-                <a href="{% url 'update_profile' %}" class="btn">Edit Profile</a>
+                <a href="{% url 'update_profile' %}" class="btns">Edit Profile</a>
             </div>
         </div>
 
@@ -146,25 +150,23 @@
 
         <!-- Uploaded Products Section -->
         <div class="uploaded-products">
-            <h2>My Uploaded Products</h2>
+            <h2 class="space" >My Uploaded Products</h2>
             {% if user_products %}
                 <ul>
                     {% for product in user_products %}
                         <li>
-                            <h3>{{ product.title }}</h3>
-                            <p>{{ product.desc }}</p>
-                            <p>Price: ${{ product.price }}</p>
                             <div>
                                 {% if product.image1 %}
                                     <img src="{{ product.image1.url }}" alt="{{ product.title }} - Image 1">
-                                {% endif %}
-                                {% if product.image2 %}
+                                {% elif product.image2 %}
                                     <img src="{{ product.image2.url }}" alt="{{ product.title }} - Image 2">
-                                {% endif %}
-                                {% if product.image3 %}
+                                {% elif product.image3 %}
                                     <img src="{{ product.image3.url }}" alt="{{ product.title }} - Image 3">
                                 {% endif %}
                             </div>
+                            <h3 class="space" >{{ product.title }}</h3>
+                            <p class="space" >{{ product.desc }}</p>
+                            <p class="space" >Price: ${{ product.price }}</p>
                             {% if not product.image1 and not product.image2 and not product.image3 %}
                                 <p>No images available</p>
                             {% endif %}
@@ -176,5 +178,4 @@
             {% endif %}
         </div>
     </div>
-</body>
-</html>
+    {% endblock %}

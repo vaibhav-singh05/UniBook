@@ -4,7 +4,7 @@ from home.models import Contact
 from home.models import Product
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import logout, authenticate, login, get_user_model
+from django.contrib.auth import logout, authenticate, login
 from .models import Product
 from .models import Profile
 from django.shortcuts import render, get_object_or_404
@@ -179,7 +179,6 @@ def add_to_cart(request, product_id):
     if not created:
         cart_item.quantity += 1
         cart_item.save()
-    messages.success(request, f"{product.title} added to cart.")
     return redirect('cart')
 
 @login_required
@@ -187,7 +186,6 @@ def remove_from_cart(request, item_id):
     # Remove item from cart
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
     cart_item.delete()
-    messages.success(request, "Item removed from cart.")
     return redirect('cart')
 
 @login_required

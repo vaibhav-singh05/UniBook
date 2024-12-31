@@ -33,6 +33,7 @@ class Product(models.Model):
     image3 = models.ImageField(upload_to="images/")
     mobile = models.CharField(max_length=12, default="")
     location = models.CharField(max_length=500)
+    user = models.CharField(max_length=10, default="")
     date = models.DateField()
 
     def __str__(self):

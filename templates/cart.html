@@ -90,6 +90,10 @@
       text-align: center;
       margin-top: 30px;
     }
+
+    .price{
+      padding: 8px 0px;
+    }
   </style>
 </head>
 <body>
@@ -111,7 +115,7 @@
         </div>
       {% endfor %}
       <div>
-        <p>Total: ₹{{ total_price }}</p>
+        <p class="price" >Total: ₹{{ total_price }}</p>
         <form method="post" action="{% url 'home' %}">
           {% csrf_token %}
           <button type="submit" class="button">Continue Shopping</button>
