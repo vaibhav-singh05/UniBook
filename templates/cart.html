@@ -87,11 +87,15 @@
     }
 
     .checkout {
-      text-align: center;
       margin-top: 30px;
     }
 
-    .price{
+    .checkout-buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .price {
       padding: 8px 0px;
     }
   </style>
@@ -115,11 +119,14 @@
         </div>
       {% endfor %}
       <div>
-        <p class="price" >Total: ₹{{ total_price }}</p>
-        <form method="post" action="{% url 'home' %}">
-          {% csrf_token %}
-          <button type="submit" class="button">Continue Shopping</button>
-        </form>
+        <p class="price">Total: ₹{{ total_price }}</p>
+        <div class="checkout-buttons">
+          <form method="post" action="{% url 'home' %}">
+            {% csrf_token %}
+            <button type="submit" class="button">Continue Shopping</button>
+          </form>
+          <a href="{% url 'checkout' %}" class="button">Checkout</a>
+        </div>
       </div>
     {% else %}
       <p>Your cart is empty.</p>

@@ -114,10 +114,7 @@ def sell(request):
              sell.save()
              messages.success(request, "Succesfully Posted!")
         return render(request, 'sell.html')
-
-
-#def product_success(request):
-    #return render(request, 'product_success.html') #Create a success template       
+     
 
 @login_required
 def my_profile(request):
@@ -127,7 +124,7 @@ def my_profile(request):
         # Fetch the user's profile
         user_profile = Profile.objects.get(user=user)
     except Profile.DoesNotExist:
-        user_profile = None  # In case the profile doesn't exist yet
+        user_profile = None
 
     # Fetch the products uploaded by the user
     user_products = Product.objects.filter(mobile=user.profile.mobile)
@@ -136,7 +133,7 @@ def my_profile(request):
     context = {
         'user': user,
         'user_profile': user_profile,
-        'user_products': user_products,  # Send the list of products
+        'user_products': user_products, 
     }
     return render(request, 'my_profile.html', context)
 
@@ -150,17 +147,17 @@ def update_profile(request):
         return redirect('my_profile')
 
     if request.method == 'POST':
-        profile_pic = request.FILES.get('profile_pic')  # Correct field name for the profile picture
-        bio = request.POST.get('bio')  # Get the bio text (optional)
+        profile_pic = request.FILES.get('profile_pic')
+        bio = request.POST.get('bio')
         
         if profile_pic:
-            user_profile.profile_pic = profile_pic  # Update profile picture if uploaded
+            user_profile.profile_pic = profile_pic
         if bio:
-            user_profile.bio = bio  # Update bio if provided
+            user_profile.bio = bio
         
-        user_profile.save()  # Save the profile updates
+        user_profile.save() 
         messages.success(request, "Profile updated successfully!")
-        return redirect('my_profile')  # Redirect to the user's profile page
+        return redirect('my_profile')
     
     return render(request, 'update_profile.html', {'user_profile': user_profile})
 
@@ -199,3 +196,14 @@ def cart(request):
     }
     return render(request, 'cart.html', context)
 
+@login_required
+def checkout(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
+    return render(request, 'checkout.html')
+
+@login_required
+def carts(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
+    return render(request, 'cart.html')
