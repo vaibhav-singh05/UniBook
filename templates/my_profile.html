@@ -1,0 +1,180 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }}'s Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            max-width: 1200px;
+            margin: 95px auto 60px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        .profile-section {
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+        .profile-section img {
+            border-radius: 50%;
+            max-width: 150px;
+            height: auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .profile-actions {
+            margin-top: 20px;
+        }
+
+        button, .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .details {
+            margin-top: 20px;
+        }
+
+        .details ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .details ul li {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .uploaded-products {
+            margin-top: 40px;
+        }
+
+        .uploaded-products ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .uploaded-products ul li {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .uploaded-products ul li img {
+            max-width: 150px;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            {% if user_profile.profile_pic %}
+                <img src="{{ user_profile.profile_pic.url }}" alt="Profile Picture" width="150">
+            {% else %}
+                <img src="{{ MEDIA_URL }}profile_pics/default.jpg" alt="Default Profile Picture"width="150">
+            {% endif %}
+            <h1>{{ user.username }}</h1>
+            <div class="profile-actions">
+                <a href="{% url 'update_profile' %}" class="btn">Edit Profile</a>
+            </div>
+        </div>
+
+        <!-- Profile Details Section -->
+        <div class="details">
+            <h2>Profile Details</h2>
+            <ul>
+                <li><strong>First Name:</strong> {{ user.first_name }}</li>
+                <li><strong>Last Name:</strong> {{ user.last_name }}</li>
+                <li><strong>Email:</strong> {{ user.email }}</li>
+
+            </ul>
+        </div>
+
+        <!-- Bio Section -->
+        <div class="details">
+            <h3>Bio:</h3>
+            {% if user_profile.bio %}<p>{{ user_profile.bio }}</p>
+            {% else %}<p>No bio available.</p>
+            {% endif %}
+        </div>
+
+        <!-- Uploaded Products Section -->
+        <div class="uploaded-products">
+            <h2>My Uploaded Products</h2>
+            {% if user_products %}
+                <ul>
+                    {% for product in user_products %}
+                        <li>
+                            <h3>{{ product.title }}</h3>
+                            <p>{{ product.desc }}</p>
+                            <p>Price: ${{ product.price }}</p>
+                            <div>
+                                {% if product.image1 %}
+                                    <img src="{{ product.image1.url }}" alt="{{ product.title }} - Image 1">
+                                {% endif %}
+                                {% if product.image2 %}
+                                    <img src="{{ product.image2.url }}" alt="{{ product.title }} - Image 2">
+                                {% endif %}
+                                {% if product.image3 %}
+                                    <img src="{{ product.image3.url }}" alt="{{ product.title }} - Image 3">
+                                {% endif %}
+                            </div>
+                            {% if not product.image1 and not product.image2 and not product.image3 %}
+                                <p>No images available</p>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You have not uploaded any products yet.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

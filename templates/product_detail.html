@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ product.title }}</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .slider {
+      position: relative;
+      text-align: center;
+    }
+
+    .slider img {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 10px;
+      display: none; /* Hide all images initially */
+      margin: 0 auto; /* Center the image horizontally */
+    }
+
+    .slider img.active {
+      display: block; /* Show the active image */
+    }
+
+    .slider .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    .slider .arrow.left {
+      left: 10px;
+    }
+
+    .slider .arrow.right {
+      right: 10px;
+    }
+
+    h3 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #555;
+    }
+
+    .Book-Name {
+      margin-top: 40px;
+    }
+
+    .overview, .price, .description {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .price {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 18px;
+      color: #28a745;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Product Picture -->
+    <div class="slider">
+      <button class="arrow left" onclick="changeSlide(-1)">&#8249;</button>
+      <img class="active" src="/media/{{ product.image1 }}" alt="{{ product.title }}">
+      {% if product.image2 %}
+        <img src="/media/{{ product.image2 }}" alt="{{ product.title }} - 2">
+      {% endif %}
+      {% if product.image3 %}
+        <img src="/media/{{ product.image3 }}" alt="{{ product.title }} - 3">
+      {% endif %}
+      <button class="arrow right" onclick="changeSlide(1)">&#8250;</button>
+    </div>
+
+    <!-- About Book -->
+    <div class="Book-Name">
+      <h3>Name of the Book</h3>
+      <p>{{ product.title }}</p>
+    </div>
+
+    <!-- Overview Section -->
+    <div class="overview">
+      <h3>Condition of the Book</h3>
+      <p>{{ product.condition }}</p>
+    </div>
+
+    <!-- Price Section -->
+    <div class="price">
+      <div>
+        <h3>Price</h3>
+        <p>₹{{ product.price }}</p>
+      </div>
+      <!-- Add to Cart Form -->
+      <form method="post" action="{% url 'add_to_cart' product.id %}">
+        {% csrf_token %}
+        <button type="submit" class="button">Add to Cart</button>
+      </form>
+    </div>
+
+    <!-- Description Section -->
+    <div class="description">
+      <h3>Description</h3>
+      <p>{{ product.desc }}</p>
+    </div>
+
+    <!-- Seller Information -->
+    <div class="description">
+      <h3>Seller Information</h3>
+      <p><strong>Name:</strong> {{ product.user }}</p>
+      <p><strong>Contact:</strong> {{ product.user.mobile }}</p>
+    </div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll(".slider img");
+
+    function changeSlide(direction) {
+      slides[currentSlide].classList.remove("active"); // Hide current slide
+      currentSlide = (currentSlide + direction + slides.length) % slides.length; // Update slide index
+      slides[currentSlide].classList.add("active"); // Show new slide
+    }
+  </script>
+</body>
+</html>
+

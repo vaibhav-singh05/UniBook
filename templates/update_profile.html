@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button {
+            align-self: center;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .profile-pic-preview {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-pic-preview img {
+            border-radius: 50%;
+            max-width: 100px;
+            height: auto;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .back-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Profile</h1>
+
+        <!-- Profile Update Form -->
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <!-- Profile Picture -->
+            <div>
+                <label for="profile_pic">Profile Picture:</label>
+                <div class="profile-pic-preview">
+                    {% if user.userprofile.profile_pic %}
+                        <img src="{{ user.userprofile.profile_pic.url }}" alt="Profile Picture" width="150">
+                    {% else %}
+                        <img src="{{ MEDIA_URL }}profile_pics/default.jpg" alt="Default Profile Picture" width="150">
+                    {% endif %}
+                    <input type="file" name="profile_pic" id="profile_pic">
+                </div>
+            </div>
+
+            <!-- Update Bio -->
+            <div>
+                <label for="bio">Bio:</label>
+                <textarea name="bio" id="bio" rows="5">{{ user.userprofile.bio }}</textarea>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Update Profile</button>
+        </form>
+
+        <!-- Back to Profile Page Link -->
+        <div class="back-link">
+            <a href="{% url 'my_profile' %}">Back to Profile</a>
+        </div>
+    </div>
+</body>
+</html>
