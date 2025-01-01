@@ -28,6 +28,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://your-domain.com',
+    'https://subdomain.your-domain.com',
+    'https://unibook.onrender.com',  # Add this
+]
+
 
 # Application definition
 
