@@ -197,12 +197,6 @@ def cart(request):
     return render(request, 'cart.html', context)
 
 @login_required
-def carts(request):
-    if request.user.is_anonymous:
-        return redirect('/login')
-    return render(request, 'cart.html')
-
-@login_required
 def checkout(request):
     if request.user.is_anonymous:
         return redirect('/login')
@@ -212,4 +206,11 @@ def checkout(request):
 def carts(request):
     if request.user.is_anonymous:
         return redirect('/login')
-    return render(request, 'cart.html')
+    # Fetch the user's cart items
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price
+    }
+    return render(request, 'cart.html', context)
