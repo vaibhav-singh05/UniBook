@@ -198,9 +198,31 @@ def cart(request):
 
 @login_required
 def checkout(request):
-    if request.user.is_anonymous:
-        return redirect('/login')
-    return render(request, 'checkout.html')
+    user = request.user
+    profile = Profile.objects.get(user=user)  # Fetch user profile (if exists)
+    
+    cart_items = CartItem.objects.filter(user=user)
+    total_price = sum(item.product.price for item in cart_items)
+
+    indian_states = [
+        "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+        "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka",
+        "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya",
+        "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim",
+        "Tamil Nadu", "Telangana", "Tripura", "Uttar Pradesh", "Uttarakhand",
+        "West Bengal"
+    ]
+
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'username': user.username,
+        'email': user.email,
+        'states': indian_states,
+    }
+    return render(request, 'checkout.html', context)
 
 @login_required
 def carts(request):
