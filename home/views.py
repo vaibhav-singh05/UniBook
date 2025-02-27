@@ -13,8 +13,6 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    if request.user.is_anonymous:
-        return redirect('/login')
     products = Product.objects.all()
     params = {'product': products}
     return render(request, 'index.html', params)
@@ -116,7 +114,6 @@ def sell(request):
         return render(request, 'sell.html')
      
 
-@login_required
 def my_profile(request):
     # Get the logged-in user's profile
     user = request.user
@@ -137,7 +134,7 @@ def my_profile(request):
     }
     return render(request, 'my_profile.html', context)
 
-@login_required
+
 def update_profile(request):
     # Get the logged-in user's profile
     try:
@@ -168,8 +165,10 @@ def product_detail(request, product_id):
     # Render the product detail page, passing the product data to the template
     return render(request, 'product_detail.html', {'product': product})
 
-@login_required
+
 def add_to_cart(request, product_id):
+    if request.user.is_anonymous:
+        return redirect('/login')
     # Add product to cart
     product = get_object_or_404(Product, id=product_id)
     cart_item, created = CartItem.objects.get_or_create(user=request.user, product=product)
@@ -185,8 +184,10 @@ def remove_from_cart(request, item_id):
     cart_item.delete()
     return redirect('cart')
 
-@login_required
+
 def cart(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
     # Fetch the user's cart items
     cart_items = CartItem.objects.filter(user=request.user)
     total_price = sum(item.product.price * item.quantity for item in cart_items)
@@ -224,7 +225,7 @@ def checkout(request):
     }
     return render(request, 'checkout.html', context)
 
-@login_required
+
 def carts(request):
     if request.user.is_anonymous:
         return redirect('/login')
