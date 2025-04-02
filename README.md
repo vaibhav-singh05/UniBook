@@ -1,12 +1,12 @@
-# 📘 UniBook - University Resource Management
+# 📘 UniBook - University Resource Management ✅
 
 UniBook is a **web-based platform** designed to help university students manage their academic resources, collaborate with peers, and stay organized.
 
-## 🚀 Features
-- 🖥 **Scalable GUI-Based Platform**: Built using Django, Bootstrap, and a relational database, supporting over **Multiple transactions** for seamless book exchanges.
-- 🔍 **Advanced Search & Filtering**: Quickly find books based on **subject, author, or price**, reducing search time by **40%** and boosting engagement by **30%**.
-- 🔒 **Secure Login & Profile Management**: Ensures smooth transactions while achieving a **98% user satisfaction rate**.
-- 🌎 **Connected Student Network**: Facilitates collaboration across multiple universities, reducing expenses and fostering a shared learning ecosystem, leading to a **30% reduction in book costs**.
+## 🚀 Features  
+- ✅ 🖥 **Scalable GUI-Based Platform**: Built using Django, Bootstrap, and a relational database, supporting over **Multiple transactions** for seamless book exchanges.  
+- ✅ 🔍 **Advanced Search & Filtering**: Quickly find books based on **subject, author, or price**, reducing search time by **40%** and boosting engagement by **30%**.  
+- ✅ 🔒 **Secure Login & Profile Management**: Ensures smooth transactions while achieving a **98% user satisfaction rate**.  
+- ✅ 🌎 **Connected Student Network**: Facilitates collaboration across multiple universities, reducing expenses and fostering a shared learning ecosystem, leading to a **30% reduction in book costs**.  
 
 ---
 ## 📌 Github Repository
