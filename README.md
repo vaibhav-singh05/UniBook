@@ -55,6 +55,11 @@ UniBook includes **secure user authentication** for safe access to resources.
 - Users must sign up or log in to access full features.
 
 ---
+
+## 🚀 Live API Link  
+The API is deployed at: [https://unibook-krly.onrender.com](https://unibook-krly.onrender.com)
+
+---
 ## 🏗 Project Structure
 ```
 UniBook/
