@@ -127,7 +127,7 @@ Shopping Cart
             {% csrf_token %}
             <button type="submit" class="button">Continue Shopping</button>
           </form>
-          <a href="{% url 'checkout' %}" class="button">Checkout</a>
+          <a href="/checkout" class="button">Checkout</a>
         </div>
       </div>
     {% else %}
