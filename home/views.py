@@ -180,8 +180,9 @@ def add_to_cart(request, product_id):
         cart_item.save()
     return redirect('cart')
 
-@login_required
 def remove_from_cart(request, item_id):
+    if request.user.is_anonymous:
+            return redirect('/login')
     # Remove item from cart
     cart_item = get_object_or_404(CartItem, id=item_id, user=request.user)
     cart_item.delete()
@@ -214,8 +215,10 @@ def carts(request):
     return render(request, 'cart.html', context)
 
 
-@login_required
+
 def checkout(request):
+    if request.user.is_anonymous:
+            return redirect('/login')
     user = request.user
     profile = Profile.objects.get(user=user)  # Assuming Profile exists
 
@@ -265,8 +268,10 @@ def checkout(request):
     return render(request, 'checkout.html', context)
 
 
-@login_required
+
 def payment_success(request):
+    if request.user.is_anonymous:
+            return redirect('/login')
     if request.user.is_authenticated:
         order = Order.objects.filter(user=request.user, paid=False).last()
 
@@ -289,7 +294,9 @@ def payment_success(request):
 
     return redirect('login')
 
-@login_required
+
 def track_orders(request):
+    if request.user.is_anonymous:
+            return redirect('/login')
     orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
     return render(request, 'track_orders.html', {'orders': orders})
