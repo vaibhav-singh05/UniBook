@@ -1,188 +1,215 @@
 {% extends 'base.html' %}
 
 {% block title %}
-{{ product.title }}
+  {{ product.title }}
 {% endblock %}
 
 {% block body %}
 {% load static %}
-  <style>
-    /* General Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      background-color: #f4f4f9;
-      color: #333;
-    }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+  }
 
-    .container {
-      max-width: 800px;
-      margin: 20px auto;
-      padding: 20px;
-      background-color: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
+  .product-container {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    height: 90vh;
+    margin: 40px auto;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
 
-    .slider {
-      position: relative;
-      text-align: center;
+  .product-image-section {
+    flex: 1;
+    min-width: 300px;
+    background: #f7f9fc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .slider {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .slider img {
+    width: 100%;
+    border-radius: 10px;
+    display: none;
+    object-fit: cover;
+    height: 250px;
+  }
+
+  .slider img.active {
+    display: block;
+  }
+
+  .slider .arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 6px 10px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  .arrow.left {
+    left: -20px;
+  }
+
+  .arrow.right {
+    right: -20px;
+  }
+
+  .product-details-section {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+  }
+
+  .detail-box, .price-box {
+    background: #f9f9f9;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+
+  .detail-box h3, .price-box h3 {
+    font-size: 15px;
+    color: #007bff;
+    margin-bottom: 4px;
+  }
+
+  .detail-box p, .price-box p {
+    font-size: 14px;
+    color: #444;
+    margin: 0;
+  }
+
+  .price-box {
+    background: #e6fff2;
+    border: 1.5px solid #28a745;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .button {
+    padding: 8px 14px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+  }
+
+  .button:hover {
+    background-color: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .product-container {
+      flex-direction: column;
+      height: auto;
     }
 
     .slider img {
-      width: 100%;
-      max-width: 400px;
-      height: 300px;
-      border-radius: 10px;
-      display: none; /* Hide all images initially */
-      margin: 0 auto; /* Center the image horizontally */
+      height: auto;
     }
 
-    .slider img.active {
-      display: block; /* Show the active image */
+    .arrow.left, .arrow.right {
+      display: none;
     }
+  }
+</style>
 
-    .slider .arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: #fff;
-      border: none;
-      padding: 10px;
-      cursor: pointer;
-      border-radius: 25%;
-      font-size: 18px;
-      user-select: none;
-    }
-
-    .slider .arrow.left {
-      left: 10px;
-    }
-
-    .slider .arrow.right {
-      right: 10px;
-    }
-
-    h3 {
-      font-size: 20px;
-      color: #007bff;
-      margin-bottom: 10px;
-    }
-
-    p {
-      font-size: 16px;
-      margin-bottom: 20px;
-      color: #555;
-    }
-
-    .Book-Name {
-      margin-top: 40px;
-    }
-
-    .overview, .price, .description {
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-    }
-
-    .price {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 18px;
-      color: #28a745;
-    }
-
-    .button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 10px 20px;
-      font-size: 16px;
-      color: white;
-      background-color: #007bff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .button:hover {
-      background-color: #0056b3;
-    }
-  </style>
-  <div class="container">
-    <!-- Product Picture -->
+<div class="product-container">
+  <!-- Left: Image Slider -->
+  <div class="product-image-section">
     <div class="slider">
       <button class="arrow left" onclick="changeSlide(-1)">&#8249;</button>
-      <img class="active" src="/media/{{ product.image1 }}" alt="{{ product.title }}">
+      <img class="active" src="/media/{{ product.image1 }}" alt="Image 1">
       {% if product.image2 %}
-        <img src="/media/{{ product.image2 }}" alt="{{ product.title }} - 2">
+        <img src="/media/{{ product.image2 }}" alt="Image 2">
       {% endif %}
       {% if product.image3 %}
-        <img src="/media/{{ product.image3 }}" alt="{{ product.title }} - 3">
+        <img src="/media/{{ product.image3 }}" alt="Image 3">
       {% endif %}
       <button class="arrow right" onclick="changeSlide(1)">&#8250;</button>
     </div>
+  </div>
 
-    <!-- About Book -->
-    <div class="Book-Name">
-      <h3>Name of the Book</h3>
+  <!-- Right: Product Details -->
+  <div class="product-details-section">
+
+    <div class="detail-box">
+      <h3>Title</h3>
       <p>{{ product.title }}</p>
     </div>
 
-    <!-- Overview Section -->
-    <div class="overview">
-      <h3>Category of Book</h3>
+    <div class="detail-box">
+      <h3>Category</h3>
       <p>{{ product.product_category }}</p>
     </div>
 
-    <!-- Price Section -->
-    <div class="price">
+    <div class="price-box">
       <div>
         <h3>Price</h3>
         <p>₹{{ product.price }}</p>
       </div>
-      <!-- Add to Cart Form -->
       <form method="post" action="{% url 'add_to_cart' product.id %}">
         {% csrf_token %}
         <button type="submit" class="button">Add to Cart</button>
       </form>
     </div>
 
-    <!-- Description Section -->
-    <div class="description">
-      <h3>Description about Condition of the Book</h3>
-      <p>{{ product.desc }}</p>
+    <div class="detail-box">
+      <h3>Description</h3>
+      <p>{{ product.desc|truncatechars:80 }}</p>
     </div>
 
-    <!-- Seller Information -->
-    <div class="description">
-      <h3>Seller Information</h3>
-      <p><strong>Name:</strong> {{ product.user }}</p>
-      <p><strong>Contact:</strong> {{ product.mobile }}</p>
+    <div class="detail-box">
+      <h3>Seller</h3>
+      <p>{{ product.user }} | 📞 {{ product.mobile }}</p>
     </div>
+
   </div>
+</div>
 
-  <script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll(".slider img");
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll(".slider img");
 
-    function changeSlide(direction) {
-      slides[currentSlide].classList.remove("active"); // Hide current slide
-      currentSlide = (currentSlide + direction + slides.length) % slides.length; // Update slide index
-      slides[currentSlide].classList.add("active"); // Show new slide
-    }
-  </script>
+  function changeSlide(direction) {
+    slides[currentSlide].classList.remove("active");
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    slides[currentSlide].classList.add("active");
+  }
+</script>
 {% endblock %}
-
