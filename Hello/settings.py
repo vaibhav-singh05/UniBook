@@ -143,5 +143,5 @@ STATICFILES_DIRS = [
 ]
 
 # Razorpay test keys
-RAZORPAY_API_KEY = 'rzp_test_41aRjtnta0MRCJ'
-RAZORPAY_API_SECRET = 'KAyzUi1fzEnMUqHYnQiI0mwT'
+RAZORPAY_API_KEY = 'xxxxxxxxxxxxxxxxxx'
+RAZORPAY_API_SECRET = 'xxxxxxxxxxxxxxxxxxxx'
