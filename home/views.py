@@ -8,8 +8,11 @@ from django.contrib.auth import logout, authenticate, login
 from .models import Product
 from .models import Profile
 from django.shortcuts import render, get_object_or_404
-from.models import Product, CartItem
+from.models import Product, CartItem , OrderItem
 from django.contrib.auth.decorators import login_required
+import razorpay
+from django.conf import settings
+from .models import Order
 
 # Create your views here.
 def index(request):
@@ -197,13 +200,45 @@ def cart(request):
     }
     return render(request, 'cart.html', context)
 
+
+def carts(request):
+    if request.user.is_anonymous:
+        return redirect('/login')
+    # Fetch the user's cart items
+    cart_items = CartItem.objects.filter(user=request.user)
+    total_price = sum(item.product.price * item.quantity for item in cart_items)
+    context = {
+        'cart_items': cart_items,
+        'total_price': total_price
+    }
+    return render(request, 'cart.html', context)
+
+
 @login_required
 def checkout(request):
     user = request.user
-    profile = Profile.objects.get(user=user)  # Fetch user profile (if exists)
-    
+    profile = Profile.objects.get(user=user)  # Assuming Profile exists
+
     cart_items = CartItem.objects.filter(user=user)
     total_price = sum(item.product.price for item in cart_items)
+    total_price_paise = int(total_price * 100)  # Convert to paise for Razorpay
+
+    # Razorpay Client
+    client = razorpay.Client(auth=(settings.RAZORPAY_API_KEY, settings.RAZORPAY_API_SECRET))
+
+    # Razorpay order
+    payment = client.order.create({
+        "amount": total_price_paise,
+        "currency": "INR",
+        "payment_capture": "1"
+    })
+
+    # Save order locally
+    order = Order.objects.create(
+        user=user,
+        amount=total_price_paise,
+        razorpay_order_id=payment['id']
+    )
 
     indian_states = [
         "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
@@ -222,18 +257,39 @@ def checkout(request):
         'username': user.username,
         'email': user.email,
         'states': indian_states,
+        'order': order,
+        'payment': payment,
+        'razorpay_key': settings.RAZORPAY_API_KEY
     }
+
     return render(request, 'checkout.html', context)
 
 
-def carts(request):
-    if request.user.is_anonymous:
-        return redirect('/login')
-    # Fetch the user's cart items
-    cart_items = CartItem.objects.filter(user=request.user)
-    total_price = sum(item.product.price * item.quantity for item in cart_items)
-    context = {
-        'cart_items': cart_items,
-        'total_price': total_price
-    }
-    return render(request, 'cart.html', context)
+@login_required
+def payment_success(request):
+    if request.user.is_authenticated:
+        order = Order.objects.filter(user=request.user, paid=False).last()
+
+        if order:
+            order.paid = True
+            order.save()
+
+            cart_items = CartItem.objects.filter(user=request.user)
+
+            for item in cart_items:
+                OrderItem.objects.create(
+                    order=order,
+                    product=item.product,
+                    quantity=item.quantity
+                )
+
+            cart_items.delete()  # Clear cart after order success
+
+        return render(request, 'payment_success.html', {'order': order})
+
+    return redirect('login')
+
+@login_required
+def track_orders(request):
+    orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
+    return render(request, 'track_orders.html', {'orders': orders})
